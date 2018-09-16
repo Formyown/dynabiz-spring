@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  main:
+    banner-mode: "off"
