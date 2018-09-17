@@ -1,4 +1,4 @@
-package io.dynabiz.spring.web.redis;
+package io.dynabiz.spring.web.security.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
