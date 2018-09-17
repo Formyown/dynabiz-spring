@@ -2,8 +2,8 @@ package io.dynabiz.spring.web.security.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.dynabiz.web.security.core.accesstoken.AccessToken;
-import io.dynabiz.web.security.core.accesstoken.AccessTokenStorage;
+import io.dynabiz.spring.web.security.core.accesstoken.AccessToken;
+import io.dynabiz.spring.web.security.core.accesstoken.AccessTokenStorage;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
