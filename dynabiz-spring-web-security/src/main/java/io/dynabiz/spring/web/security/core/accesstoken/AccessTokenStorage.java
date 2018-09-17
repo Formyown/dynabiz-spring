@@ -1,4 +1,4 @@
-package io.dynabiz.web.security.core.accesstoken;
+package io.dynabiz.spring.web.security.core.accesstoken;
 
 public interface AccessTokenStorage {
     void save(AccessToken token);

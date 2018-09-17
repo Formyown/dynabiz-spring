@@ -36,8 +36,11 @@
         <module>dynabiz-core</module>
         <module>dynabiz-std-exceptions</module>
         <module>dynabiz-spring-web</module>
-        <module>dynabiz-spring-data</module>
+        <module>dynabiz-spring-web-security</module>
         <module>dynabiz-spring-web-redis-starter</module>
+        <module>dynabiz-spring-web-security-redis-starter</module>
+
+        <module>dynabiz-spring-data</module>
     </modules>
 
 </project>

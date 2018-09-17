@@ -1,4 +1,4 @@
-package io.dynabiz.web.security.permission;
+package io.dynabiz.spring.web.security.permission;
 
 import java.lang.annotation.*;
 

@@ -1,9 +1,9 @@
-package io.dynabiz.web.security.config;
+package io.dynabiz.spring.web.security.config;
 
+import io.dynabiz.spring.web.security.core.accesstoken.AccessTokenConfig;
+import io.dynabiz.spring.web.security.core.accesstoken.AccessTokenConfigurationProperties;
+import io.dynabiz.spring.web.security.permission.PermissionVerificationAspect;
 import io.dynabiz.web.context.config.EnableServiceContext;
-import io.dynabiz.web.security.core.accesstoken.AccessTokenConfig;
-import io.dynabiz.web.security.core.accesstoken.AccessTokenConfigurationProperties;
-import io.dynabiz.web.security.permission.PermissionVerificationAspect;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;

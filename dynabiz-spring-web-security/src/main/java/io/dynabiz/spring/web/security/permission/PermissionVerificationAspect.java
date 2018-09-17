@@ -1,10 +1,11 @@
-package io.dynabiz.web.security.permission;
+package io.dynabiz.spring.web.security.permission;
 
 
+import io.dynabiz.spring.web.security.core.SecurityContext;
 import io.dynabiz.std.exception.PermissionException;
 import io.dynabiz.web.chain.ServiceCallChainContext;
 import io.dynabiz.web.context.ServiceContextHolder;
-import io.dynabiz.web.security.core.SecurityContext;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -21,7 +22,7 @@ import java.util.Set;
 @Component
 public class PermissionVerificationAspect {
 
-    @Before("@annotation(io.dynabiz.web.security.permission.Permission)")
+    @Before("@annotation(io.dynabiz.spring.web.security.permission.Permission)")
     public void checkPermission(JoinPoint jp) {
 
         Permission permission = null;

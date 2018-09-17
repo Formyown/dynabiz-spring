@@ -1,9 +1,10 @@
-package io.dynabiz.web.security.core.accesstoken;
+package io.dynabiz.spring.web.security.core.accesstoken;
 
 
+import io.dynabiz.spring.web.security.core.SecurityContext;
 import io.dynabiz.std.exception.TokenException;
 import io.dynabiz.web.context.ServiceContextHolder;
-import io.dynabiz.web.security.core.SecurityContext;
+
 
 import java.util.Set;
 

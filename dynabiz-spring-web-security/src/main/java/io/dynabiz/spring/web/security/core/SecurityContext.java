@@ -1,4 +1,4 @@
-package io.dynabiz.web.security.core;
+package io.dynabiz.spring.web.security.core;
 
 
 import io.dynabiz.std.exception.PermissionException;
