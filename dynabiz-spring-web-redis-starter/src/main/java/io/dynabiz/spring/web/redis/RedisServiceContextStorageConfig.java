@@ -10,14 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 
 @Configuration
-public class RedisWebStorageConfig {
-
-    @Bean
-    @ConditionalOnMissingBean
-    public AccessTokenStorage accessTokenStorage(){
-        return new RedisAccessTokenStorage(new StringRedisTemplate());
-    }
-
+public class RedisServiceContextStorageConfig {
 
     @Bean
     @ConditionalOnMissingBean
