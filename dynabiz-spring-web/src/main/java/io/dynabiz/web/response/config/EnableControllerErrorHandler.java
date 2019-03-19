@@ -1,7 +1,7 @@
 package io.dynabiz.web.response.config;
 
 
-import io.dynabiz.web.response.ErrorHandlerController;
+import io.dynabiz.web.error.ErrorHandlerController;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

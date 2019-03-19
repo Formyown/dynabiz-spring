@@ -3,12 +3,12 @@ package io.dynabiz.web.response;
 
 import io.dynabiz.BusinessException;
 
-public class GeneralResponse {
+public class GeneralResponse<T> {
 
     private int code;
     private int subCode;
     private String msg;
-    private Object data;
+    private T data;
 
     public GeneralResponse() {
 
@@ -27,13 +27,13 @@ public class GeneralResponse {
         this.data = null;
     }
 
-    public GeneralResponse(BusinessException ex, Object data){
+    public GeneralResponse(BusinessException ex, T data){
         this.code = ex.getCode();
         this.msg = ex.toString();
         this.data = data;
     }
 
-    public GeneralResponse(Object data){
+    public GeneralResponse(T data){
         this.code = 0;
         this.msg = "All correct";
         this.data = data;
@@ -61,7 +61,7 @@ public class GeneralResponse {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 
