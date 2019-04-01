@@ -3,7 +3,7 @@ package io.dynabiz.workflow.stepped;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TaskState {
+public class SteppedTaskState {
     @JsonProperty
     private int stepIndex;
     @JsonProperty
@@ -15,10 +15,10 @@ public class TaskState {
     @JsonProperty
     private String data;
 
-    public TaskState() {
+    public SteppedTaskState() {
     }
 
-    public TaskState(int stepIndex, int retryNumber, int maxStepIndex, long lastInvoked, String data) {
+    public SteppedTaskState(int stepIndex, int retryNumber, int maxStepIndex, long lastInvoked, String data) {
         this.stepIndex = stepIndex;
         this.retryNumber = retryNumber;
         this.maxStepIndex = maxStepIndex;

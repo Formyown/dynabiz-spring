@@ -39,7 +39,7 @@ public class SteppedTaskExecutor {
                                                           String key) throws Exception{
         Assert.beTrue(token.length() == TOKEN_LEN * 2, TokenException.BAD_TOKEN);
 
-        TaskState state = storage.find(token);
+        SteppedTaskState state = storage.find(token);
         SteppedTask task = springContext.getBean(tClass);
 
         int stepIndex = state.getStepIndex() + 1; // 先获取下一步
@@ -117,7 +117,7 @@ public class SteppedTaskExecutor {
         //实例化脚本
         SteppedTask task = springContext.getBean(tClass);
 
-        TaskState state = new TaskState();
+        SteppedTaskState state = new SteppedTaskState();
         state.setStepIndex(0);
         state.setMaxStepIndex(getMaxStep(tClass));
 
@@ -189,11 +189,11 @@ public class SteppedTaskExecutor {
         return new StepReturnData(ret,  mapper.writeValueAsString(taskClass));
     }
 
-    private static void updateState(String token, TaskState state, long ttl){
+    private static void updateState(String token, SteppedTaskState state, long ttl){
         storage.save(token, state, ttl, true);
     }
 
-    private static String saveState(TaskState store, long ttl) {
+    private static String saveState(SteppedTaskState store, long ttl) {
         String token;
         do{
             token = RandomString.nextHex(TOKEN_LEN);
