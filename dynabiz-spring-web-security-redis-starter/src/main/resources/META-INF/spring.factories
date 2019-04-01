@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.dynabiz.spring.web.security.redis.RedisAccessTokenStorageConfig
+RedisAccessTokenStorageConfig

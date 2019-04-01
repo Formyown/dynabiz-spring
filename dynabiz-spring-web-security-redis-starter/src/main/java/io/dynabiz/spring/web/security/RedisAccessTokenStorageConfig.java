@@ -1,4 +1,4 @@
-package io.dynabiz.spring.web.security.redis;
+package io.dynabiz.spring.web.security;
 
 
 
