@@ -23,12 +23,14 @@
 package test;
 
 import io.dynabiz.web.error.config.EnableGlobalErrorHandler;
+import io.dynabiz.web.response.config.EnableGeneralResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScans;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
+@EnableGeneralResponse
 @EnableGlobalErrorHandler
 @SpringBootApplication
 public class TestApplication {

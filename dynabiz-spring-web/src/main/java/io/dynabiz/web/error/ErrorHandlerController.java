@@ -18,6 +18,7 @@ import java.rmi.ServerException;
 public class ErrorHandlerController {
 
     private static Logger logger = LoggerFactory.getLogger(ErrorHandlerController.class);
+
     public ErrorHandlerController() {
         logger.info("Global controller error handler enabled.");
     }
@@ -25,15 +26,14 @@ public class ErrorHandlerController {
     @ExceptionHandler(value = { BusinessException.class })
     @ResponseStatus(HttpStatus.OK)
     public GeneralResponse serverException(BusinessException ex, WebRequest req) {
-        logger.warn("Handled business exception", ex);
-        ex.printStackTrace();
+        logger.warn("[BusinessException] Handled business exception", ex);
         return new GeneralResponse(ex);
     }
 
     @ExceptionHandler(value = { DecodeException.class })
     @ResponseStatus(HttpStatus.OK)
     public GeneralResponse serverException(DecodeException ex, WebRequest req) {
-        logger.warn("Handled decode exception", ex);
+        logger.warn("[DecodeException] Handled decode exception", ex);
         if(ex.getCause() instanceof  ServerException)
             return new GeneralResponse((ServerException) ex.getCause());
         else
@@ -43,7 +43,7 @@ public class ErrorHandlerController {
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public GeneralResponse serverException(Exception ex, WebRequest req) {
-        logger.warn("Handled exception", ex);
+        logger.warn("[GeneralResponse] Handled exception", ex);
         return new GeneralResponse(ex);
     }
 

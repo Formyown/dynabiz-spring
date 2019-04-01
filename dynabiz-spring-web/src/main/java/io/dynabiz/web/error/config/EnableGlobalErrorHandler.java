@@ -12,7 +12,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @EnableGeneralResponse
 @Import({ErrorHandlerController.class})
-//@ComponentScan("io.dynabiz.web.error")
 @Documented
 public @interface EnableGlobalErrorHandler {
 }

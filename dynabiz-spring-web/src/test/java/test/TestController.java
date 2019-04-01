@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("")
 @RestController
-public class ErrorTestController {
+public class TestController {
 
     @RequestMapping("throwerror")
     public String throwError(){
         throw LoginException.WRONG_NAME;
     }
+
+    @RequestMapping("response")
+    public String stringResponse(){
+        return "This is test response body";
+    }
+
+
 }
