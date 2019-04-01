@@ -41,6 +41,8 @@
         <module>dynabiz-spring-web-security-redis-starter</module>
 
         <module>dynabiz-spring-data</module>
+        <module>dynabiz-spring-workflow</module>
+        <module>dynabiz-spring-workflow-redis-starter</module>
     </modules>
 
 </project>

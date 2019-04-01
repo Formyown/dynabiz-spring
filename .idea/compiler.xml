@@ -12,8 +12,17 @@
         <module name="dynabiz-spring-web-redis-starter" />
         <module name="dynabiz-spring-web-security" />
         <module name="dynabiz-spring-web-security-redis-starter" />
+        <module name="dynabiz-spring-workflow" />
+        <module name="dynabiz-spring-workflow-redis-starter" />
         <module name="dynabiz-std-exceptions" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="dynabiz-spring-data" options="-parameters" />
+      <module name="dynabiz-spring-web" options="-parameters" />
+      <module name="dynabiz-spring-web-security" options="-parameters" />
+    </option>
   </component>
 </project>
