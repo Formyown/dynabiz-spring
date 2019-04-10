@@ -2,7 +2,6 @@ package io.dynabiz.spring.stepped.storage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.istack.internal.NotNull;
 import io.dynabiz.workflow.stepped.SteppedTaskState;
 import io.dynabiz.workflow.stepped.SteppedTaskStateStorage;
 
