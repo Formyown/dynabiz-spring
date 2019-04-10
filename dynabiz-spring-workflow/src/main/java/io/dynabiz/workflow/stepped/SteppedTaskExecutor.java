@@ -29,18 +29,21 @@ public class SteppedTaskExecutor {
         SteppedTaskExecutor.springContext = context;
     }
 
-    public <T extends SteppedTask> SteppedTaskResult next(Class<T> tClass, String token,
+    public static <T extends SteppedTask> SteppedTaskResult next(Class<T> tClass, String token,
                                                           SteppedTaskArgumentsResolver resolver) throws Exception{
         return next(tClass, token, resolver, null);
     }
 
-    public <T extends SteppedTask> SteppedTaskResult next(Class<T> tClass, String token,
+    public static <T extends SteppedTask> SteppedTaskResult next(Class<T> tClass, String token,
                                                           SteppedTaskArgumentsResolver resolver,
                                                           String key) throws Exception{
+
         Assert.beTrue(token.length() == TOKEN_LEN * 2, TokenException.BAD_TOKEN);
 
         SteppedTaskState state = storage.find(token);
         SteppedTask task = springContext.getBean(tClass);
+        // 恢复状态
+        mapper.readerForUpdating(task).readValue(state.getData());
 
         int stepIndex = state.getStepIndex() + 1; // 先获取下一步
 
@@ -92,7 +95,7 @@ public class SteppedTaskExecutor {
         return result;
     }
 
-    public <T extends SteppedTask> SteppedTaskResult start(Class<T> tClass,
+    public static <T extends SteppedTask> SteppedTaskResult start(Class<T> tClass,
                                                            SteppedTaskArgumentsResolver resolver) throws Exception{
         return start(tClass, resolver, null);
     }
@@ -181,7 +184,13 @@ public class SteppedTaskExecutor {
                              SteppedTaskArgumentsResolver resolver) throws JsonProcessingException {
         Object ret;
         try {
-            ret = method.invoke(taskClass, resolver.resolve(method.getParameters()));
+            if(resolver == null){
+                ret = method.invoke(taskClass);
+            }
+            else{
+                ret = method.invoke(taskClass, resolver.resolve(method.getParameters()));
+            }
+
 
         } catch (Exception e){
             return new StepReturnData(e.getCause(),null);
@@ -197,7 +206,7 @@ public class SteppedTaskExecutor {
         String token;
         do{
             token = RandomString.nextHex(TOKEN_LEN);
-        }while(storage.save(token, store, ttl, false));
+        }while(!storage.save(token, store, ttl, false));
         //设置过期时间
         storage.updateExpire(token, ttl);
         return token;
