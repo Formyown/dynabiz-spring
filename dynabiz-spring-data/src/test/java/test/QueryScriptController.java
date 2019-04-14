@@ -1,6 +1,6 @@
 package test;
 
-import io.dynabiz.spring.data.QueryScript;
+import org.dynabiz.spring.data.QueryScript;
 import org.springframework.web.bind.annotation.*;
 
 

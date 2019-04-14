@@ -28,7 +28,7 @@
     <artifactId>dynabiz-core</artifactId>
 
     <parent>
-        <groupId>io.dynabiz</groupId>
+        <groupId>org.dynabiz</groupId>
         <artifactId>dynabiz-spring</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>

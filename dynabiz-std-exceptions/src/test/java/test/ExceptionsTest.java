@@ -22,9 +22,9 @@
 
 package test;
 
-import io.dynabiz.BusinessException;
+import org.dynabiz.BusinessException;
 
-import io.dynabiz.std.exception.*;
+import org.dynabiz.std.exception.*;
 import org.junit.Test;
 
 import java.util.ArrayList;

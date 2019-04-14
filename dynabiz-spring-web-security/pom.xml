@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.dynabiz</groupId>
+    <groupId>org.dynabiz</groupId>
     <artifactId>dynabiz-spring-web-security</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -25,12 +25,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.dynabiz</groupId>
+            <groupId>org.dynabiz</groupId>
             <artifactId>dynabiz-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>io.dynabiz</groupId>
+            <groupId>org.dynabiz</groupId>
             <artifactId>dynabiz-std-exceptions</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
@@ -80,7 +80,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.dynabiz</groupId>
+            <groupId>org.dynabiz</groupId>
             <artifactId>dynabiz-spring-web</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>

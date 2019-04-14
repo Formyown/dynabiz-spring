@@ -1,9 +1,9 @@
 package test;
 
-import io.dynabiz.workflow.stepped.MapSteppedTaskArgumentResolver;
-import io.dynabiz.workflow.stepped.SteppedTaskArgumentsResolver;
-import io.dynabiz.workflow.stepped.SteppedTaskExecutor;
-import io.dynabiz.workflow.stepped.SteppedTaskResult;
+import org.dynabiz.workflow.stepped.MapSteppedTaskArgumentResolver;
+import org.dynabiz.workflow.stepped.SteppedTaskArgumentsResolver;
+import org.dynabiz.workflow.stepped.SteppedTaskExecutor;
+import org.dynabiz.workflow.stepped.SteppedTaskResult;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

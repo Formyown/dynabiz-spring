@@ -22,8 +22,8 @@
 
 package test;
 
-import io.dynabiz.BusinessException;
-import io.dynabiz.util.Assert;
+import org.dynabiz.BusinessException;
+import org.dynabiz.util.Assert;
 import org.junit.Test;
 
 public class AssertionTest {

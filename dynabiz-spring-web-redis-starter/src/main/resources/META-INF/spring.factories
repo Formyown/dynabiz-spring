@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.dynabiz.spring.web.redis.RedisServiceContextStorageConfig
+org.dynabiz.spring.web.redis.RedisServiceContextStorageConfig

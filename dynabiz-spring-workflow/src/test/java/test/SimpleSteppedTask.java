@@ -1,8 +1,8 @@
 package test;
 
-import io.dynabiz.workflow.stepped.Param;
-import io.dynabiz.workflow.stepped.Step;
-import io.dynabiz.workflow.stepped.SteppedTask;
+import org.dynabiz.workflow.stepped.Param;
+import org.dynabiz.workflow.stepped.Step;
+import org.dynabiz.workflow.stepped.SteppedTask;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 

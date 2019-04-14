@@ -3,7 +3,7 @@ package test;
 
 
 
-import io.dynabiz.spring.data.PageableReader;
+import org.dynabiz.spring.data.PageableReader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

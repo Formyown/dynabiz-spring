@@ -22,8 +22,8 @@
 
 package test;
 
-import io.dynabiz.mapper.Mapped;
-import io.dynabiz.mapper.ObjectMapper;
+import org.dynabiz.mapper.Mapped;
+import org.dynabiz.mapper.ObjectMapper;
 import org.junit.Test;
 
 import java.math.BigDecimal;
