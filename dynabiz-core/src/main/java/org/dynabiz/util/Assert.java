@@ -24,9 +24,11 @@ package org.dynabiz.util;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 public class Assert {
+
 
     public static <T,E extends Throwable> T notNull(T obj, E exception) throws E {
         if(obj == null){
