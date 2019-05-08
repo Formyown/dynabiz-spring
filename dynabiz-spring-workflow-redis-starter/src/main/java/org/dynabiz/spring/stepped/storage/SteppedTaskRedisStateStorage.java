@@ -23,7 +23,6 @@ public class SteppedTaskRedisStateStorage implements SteppedTaskStateStorage {
 
     public SteppedTaskRedisStateStorage(final StringRedisTemplate redisTemplate, final ObjectMapper mapper) {
         Objects.requireNonNull(redisTemplate, "RedisTemplate should not be null");
-        Objects.requireNonNull(mapper, "RedisTemplate should not be null");
         this.redisTemplate = redisTemplate;
         this.valueOps = this.redisTemplate.opsForValue();
         this.mapper = new ObjectMapper();
