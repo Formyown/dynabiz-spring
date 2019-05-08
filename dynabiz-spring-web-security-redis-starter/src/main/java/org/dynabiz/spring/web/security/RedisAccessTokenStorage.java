@@ -20,7 +20,6 @@ public class RedisAccessTokenStorage implements AccessTokenStorage {
 
     public RedisAccessTokenStorage(final StringRedisTemplate redisTemplate) {
         Objects.requireNonNull(redisTemplate, "RedisTemplate should not be null");
-        Objects.requireNonNull(mapper, "RedisTemplate should not be null");
         this.redisTemplate = redisTemplate;
         this.mapper = new ObjectMapper();
     }
