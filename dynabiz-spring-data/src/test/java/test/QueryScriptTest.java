@@ -35,7 +35,7 @@ public class QueryScriptTest {
         System.out.println("||             QUERY SCRIPT RESOLVER TESTING             ||");
         System.out.println("+=========================================================+");
 
-        String queryScript = "{\"age\":10}";
+        String queryScript = "{\"type\":\"OPEN\", \"amount\": { \"$gt\":100}, \"price\": { \"$lt\": 55}, \"color\": {\"$in\":[\"R\",\"G\",\"B\"]}}";
 
         MvcResult mvcResult = mockMvc.perform(get("/queryWithQueryScript?qscript={0}", queryScript)).andExpect(status().isOk()).andReturn();
         assert queryScript.equals(mvcResult.getResponse().getContentAsString());
