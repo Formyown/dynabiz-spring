@@ -13,8 +13,8 @@ public class RedisServiceContextStorageConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public ServiceContextStorage serviceContextStorage(){
-        return new RedisServiceContextStorage(new StringRedisTemplate());
+    public ServiceContextStorage serviceContextStorage(StringRedisTemplate template){
+        return new RedisServiceContextStorage(template);
     }
 
 }

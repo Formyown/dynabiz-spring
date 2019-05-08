@@ -13,8 +13,8 @@ public class RedisAccessTokenStorageConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public SteppedTaskStateStorage accessTokenStorage(){
-        return new SteppedTaskRedisStateStorage(new StringRedisTemplate(), new ObjectMapper());
+    public SteppedTaskStateStorage accessTokenStorage(StringRedisTemplate redisTemplate){
+        return new SteppedTaskRedisStateStorage(redisTemplate, new ObjectMapper());
     }
 
 

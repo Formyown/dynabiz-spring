@@ -14,8 +14,8 @@ public class RedisAccessTokenStorageConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public AccessTokenStorage accessTokenStorage(){
-        return new RedisAccessTokenStorage(new StringRedisTemplate());
+    public AccessTokenStorage accessTokenStorage(StringRedisTemplate stringRedisTemplate){
+        return new RedisAccessTokenStorage(stringRedisTemplate);
     }
 
 

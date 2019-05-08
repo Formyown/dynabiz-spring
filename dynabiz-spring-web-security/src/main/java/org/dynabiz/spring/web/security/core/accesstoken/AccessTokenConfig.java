@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 
-@Import({AccessTokenConfigurationProperties.class})
+
 @EnableConfigurationProperties(AccessTokenConfigurationProperties.class)
 public class AccessTokenConfig {
     @Bean
