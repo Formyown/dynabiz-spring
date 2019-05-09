@@ -22,7 +22,8 @@
 
 package test;
 
-import org.dynabiz.mapper.Mapped;
+import org.dynabiz.mapper.MappingData;
+import org.dynabiz.mapper.MappingField;
 import org.dynabiz.mapper.ObjectMapper;
 import org.junit.Test;
 
@@ -66,10 +67,14 @@ public class MapperTest {
             assert transfer.getTime().equals(entity.getTime());
             assert transfer.getTotalDiscount().equals(entity.getTotalDiscount().add(new BigDecimal("10")));
             assert transfer.getTotalPrice().equals(entity.getTotalPrice());
-            assert transfer.getUserPhone().equals(entity.getPhone());
+            assert transfer.getPhone().equals(entity.getPhone());
             assert transfer.isCanReturns();
         }
 
+        entities = ObjectMapper.mapFromCollection(OrderEntity.class, orderTransfers);
+        for (int i = 0; i < 100; i++) {
+            System.out.println(entities.get(i).toString());
+        }
     }
 
 
@@ -142,20 +147,21 @@ public class MapperTest {
         }
     }
 
+    @MappingData
     public static class OrderTransfer {
-        @Mapped
+        @MappingField
         private long orderID;
-        @Mapped
+        @MappingField
         private String[] items;
-        @Mapped
+        @MappingField
         private Timestamp time;
-
+        @MappingField
         private BigDecimal totalDiscount;
-        @Mapped
+        @MappingField
         private BigDecimal totalPrice;
 
-        @Mapped(name = "phone")
-        private String userPhone;
+        @MappingField()
+        private String phone;
         private boolean canReturns;
 
         public long getOrderID() {
@@ -186,7 +192,7 @@ public class MapperTest {
             return totalDiscount;
         }
 
-        @Mapped
+
         public void setTotalDiscount(BigDecimal totalDiscount) {
             this.totalDiscount = totalDiscount.add(new BigDecimal("10"));
         }
@@ -199,12 +205,12 @@ public class MapperTest {
             this.totalPrice = totalPrice;
         }
 
-        public String getUserPhone() {
-            return userPhone;
+        public String getPhone() {
+            return phone;
         }
 
-        public void setUserPhone(String userPhone) {
-            this.userPhone = userPhone;
+        public void setPhone(String userPhone) {
+            this.phone = userPhone;
         }
 
         public boolean isCanReturns() {
@@ -224,7 +230,7 @@ public class MapperTest {
                     ", time=" + time +
                     ", totalDiscount=" + totalDiscount +
                     ", totalPrice=" + totalPrice +
-                    ", userPhone='" + userPhone + '\'' +
+                    ", userPhone='" + phone + '\'' +
                     ", canReturns=" + canReturns +
                     '}';
         }

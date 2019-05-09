@@ -38,15 +38,18 @@ import java.util.stream.Collectors;
 public class ObjectMapper {
 
     public static <T, ST> List<T> mapFromCollection(Class<T> targetType, Collection<ST> sourcesList){
-        return mapFromCollection(targetType,sourcesList);
+        return mapFromCollection(targetType,sourcesList, null);
     }
 
     public static <T, ST> List<T> mapFromCollection(Class<T> targetType, Collection<ST> sourcesList, Mapping<ST, T> mapping){
         return sourcesList.stream().map((s)->mapFrom(targetType, s, mapping)).collect(Collectors.toList());
     }
 
+
+
     public static <T, ST> T mapFrom(Class<T> targetType, ST sources){
         return mapFrom(targetType, sources, null);
+
     }
 
     public static <T, ST> T mapFrom(Class<T> targetType, ST sources,  Mapping<ST, T> mapping){
@@ -64,29 +67,81 @@ public class ObjectMapper {
         map(target, sources, null);
     }
 
+    /**
+     * 从"目标"类中找到映射设置
+     * @return
+     */
+    public static List<MappingFieldDescription> getDescriptionForTargetType(Class targetType){
+        MappingData config = (MappingData)targetType.getAnnotation(MappingData.class);
+        Field[] fields = targetType.getDeclaredFields();
+        List<MappingFieldDescription> descriptionList = new ArrayList<>(fields.length);
+        MappingField fieldConfig;
+        for (Field field : fields) {
+            if (null != (fieldConfig = field.getAnnotation(MappingField.class))) {
+                MappingFieldDescription d = new MappingFieldDescription();
+                d.setConfigs(field.getType(), field.getName(), config, fieldConfig);
+                descriptionList.add(d);
+            }
+        }
+        return descriptionList;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private static void applyDescription(List<MappingFieldDescription> descriptions, Object src, Object dest){
+        for (MappingFieldDescription d: descriptions) {
+            Object value = readValue(d.mappingName, d.type, src);
+            if(null != d.filterClass){
+                try {
+                    value = ((Function)d.filterClass.newInstance()).apply(value);
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new MapperException(e);
+                }
+            }
+            setValue(d.mappingName, d.type, dest, value);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static <T, ST> void map(T target, ST sources, Mapping<ST, T> mapping){
         Objects.requireNonNull(target, "Target object could not be null.");
-        Objects.requireNonNull(target, "Source object could not be null.");
+        Objects.requireNonNull(sources, "Source object could not be null.");
 
-        Class curType = target.getClass();
-        Map<Class, Function> filterCache = new HashMap<>();
+//        Class curType = target.getClass();
+//        Map<Class, Function> filterCache = new HashMap<>();
+//        do{
+//            mapDeclaredFields(curType, target, sources, filterCache);
+//        }while (!Object.class.equals(curType = curType.getSuperclass()));
+//
+//        if(mapping != null)mapping.mapTo(sources, target);
+        Class curType;
+        MappingData mappingData;
+        if(null != (mappingData = target.getClass().getAnnotation(MappingData.class))){
+            curType = target.getClass();
+        }
+        else if(null != (mappingData = sources.getClass().getAnnotation(MappingData.class))){
+            curType = sources.getClass();
+        }
+        else throw new MapperException("One of the target and source must have 'MappingData'");
         do{
-            mapDeclaredFields(curType, target, sources, filterCache);
+            List<MappingFieldDescription> descriptions = getDescriptionForTargetType(curType);
+            applyDescription(descriptions, sources, target);
         }while (!Object.class.equals(curType = curType.getSuperclass()));
 
         if(mapping != null)mapping.mapTo(sources, target);
+
     }
 
     private static void mapDeclaredFields(Class targetType, Object target, Object sources,
                                           Map<Class, Function> filterCache){
-        MappedConfig config = target.getClass().getAnnotation(MappedConfig.class);
-        MappedFieldDescription fieldDescription = new MappedFieldDescription();
+
+        MappingData config = target.getClass().getAnnotation(MappingData.class);
+        MappingFieldDescription fieldDescription = new MappingFieldDescription();
         Class sourceType = sources.getClass();
         Field[] fields = getMappedFields(target);
         for (Field field : fields) {
 
-            fieldDescription.setConfigs(field.getType(), field.getName(), config, field.getAnnotation(Mapped.class));
+            fieldDescription.setConfigs(field.getType(), field.getName(), config, field.getAnnotation(MappingField.class));
             if(checkSourceType(fieldDescription, targetType))
                 applyValue(
                         fieldDescription,
@@ -111,7 +166,7 @@ public class ObjectMapper {
                     method.getParameterTypes()[0],
                     getFieldNameFromSetter(method.getName()),
                     config,
-                    method.getAnnotation(Mapped.class)
+                    method.getAnnotation(MappingField.class)
             );
             if(checkSourceType(fieldDescription, targetType)) applyValue(
                     fieldDescription,
@@ -126,18 +181,20 @@ public class ObjectMapper {
 
 
     @SuppressWarnings("unchecked")
-    private static void applyValue(MappedFieldDescription fieldDescription, Object target, Method setter,
+    private static void applyValue(MappingFieldDescription fieldDescription, Object target, Method setter,
                                    Class sourceType, Object source, Map<Class, Function> filterCache){
         if(1 != setter.getParameterCount()) throw new IllegalStateException("");
 
-        Object value = readValue(fieldDescription.type, fieldDescription.sourceFieldName, sourceType, source);
+
         if(fieldDescription.filterClass != null){
             Function mappingFilter = filterCache.get(fieldDescription.filterClass);
             if(mappingFilter == null) {
                 try {
                     filterCache.put(fieldDescription.filterClass,
                             mappingFilter = (Function)fieldDescription.filterClass.newInstance());
-                    setter.invoke(source, mappingFilter.apply(value));
+
+                    Object value = readValue(fieldDescription.mappingName, fieldDescription.type, source);
+                    setter.invoke(target, mappingFilter.apply(value));
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     throw new MapperException(e);
                 }
@@ -146,7 +203,7 @@ public class ObjectMapper {
         }
         else {
             try {
-                setter.invoke(target, readValue(fieldDescription.type, fieldDescription.sourceFieldName, sourceType, source));
+                setter.invoke(target, readValue(fieldDescription.mappingName, fieldDescription.type, source));
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new MapperException(e);
             }
@@ -156,9 +213,9 @@ public class ObjectMapper {
     }
 
 
-    private static Object readValue(Class type, String name, Class objType, Object source){
-        Method getter = Assert.notNull(findGetter(type, name, objType),
-                new MapperException(String.format("Cannot find get method with field named %s type %s", name, type)));
+    private static Object readValue(String name, Class fieldType, Object source){
+        Method getter = Assert.notNull(findGetter(fieldType, name, source.getClass()),
+            new MapperException(String.format("Cannot find get method with field named %s in type %s", name, source.getClass())));
         try {
             return getter.invoke(source);
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -166,12 +223,25 @@ public class ObjectMapper {
         }
     }
 
+
+    private static void setValue(String name, Class fieldType, Object dest, Object ...value){
+        Method setter = Assert.notNull(findSetter(fieldType, name, dest.getClass()),
+                new MapperException(String.format("Cannot find get method with field named %s in type %s", name, dest.getClass())));
+        try{
+            setter.invoke(dest, value);
+        }
+        catch (IllegalAccessException | InvocationTargetException e) {
+            throw new MapperException(e);
+        }
+    }
+
+
     private static Field[] getMappedFields(Object o){
         Field[] fields = o.getClass().getDeclaredFields();
         Field[] mappedFields = new Field[fields.length];
         int mappedCount = 0;
         for (Field field : fields) {
-            if (null != field.getAnnotation(Mapped.class)) {
+            if (null != field.getAnnotation(MappingField.class)) {
                 mappedFields[mappedCount++] = field;
             }
         }
@@ -183,20 +253,77 @@ public class ObjectMapper {
         Method[] mappedSetters = new Method[methods.length];
         int mappedCount = 0;
         for (Method method : methods) {
-            if (null != method.getAnnotation(Mapped.class)) {
+            if (null != method.getAnnotation(MappingField.class)) {
                 mappedSetters[mappedCount++] = method;
             }
         }
         return Arrays.copyOf(mappedSetters, mappedCount);
     }
 
+
+
+
+
+
+    private static boolean checkSourceType(MappingFieldDescription fieldDescription, Class sourceType){
+        if(fieldDescription.mappingClass == null) return true;
+        for(Class c : fieldDescription.mappingClass) if(sourceType.equals(c)) return true;
+        return false;
+    }
+
+    private static String getFieldNameFromSetter(String methodName){
+        if(methodName.startsWith("set")) methodName = methodName.substring(3);
+        if(methodName.startsWith("is")) methodName = methodName.substring(2);
+
+        if(Character.isLowerCase(methodName.charAt(0)))
+            return methodName;
+        else{
+            char[] chars = methodName.toCharArray();
+            chars[0]+=32;
+            return new String(chars);
+        }
+    }
+
+    private static class MappingFieldDescription {
+        private String realName;
+        private Class type;
+        private Class[] mappingClass;
+        private String mappingName;
+        private Class filterClass;
+
+
+
+        private void setConfigs(Class type, String fieldName, MappingData config, MappingField mappingField){
+            this.type = type;
+
+            this.realName = fieldName;
+            this.mappingName = mappingField.name().isEmpty() ? fieldName : mappingField.name();
+            this.mappingClass = mappingField.targetClass().length == 0 ?
+                    (config == null ?
+                            null :
+                            config.targetClass().length == 0 ?
+                                    null :
+                                    config.targetClass()) :
+                    mappingField.targetClass();
+            this.filterClass = void.class.equals(mappingField.filter()) ?
+                    (config == null ?
+                            null :
+                            void.class.equals(config.filter()) ?
+                                    null :
+                                    config.filter()) :
+                    mappingField.filter();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private static Method findGetter(Class type, String name, Class objType){
-        if(Character.isLowerCase(name.charAt(0)) && Character.isLowerCase(name.charAt(1))) {
+        if(Character.isLowerCase(name.charAt(0))){
             char[] chars = name.toCharArray();
             chars[0]-=32;
             name = new String(chars);
         }
+
+
         String prefix = (boolean.class.equals(type) || Boolean.class.equals(type)) ? "is" : "get";
         try {
             return objType.getMethod(prefix + name);
@@ -218,54 +345,5 @@ public class ObjectMapper {
             if(method.getName().equals(prefix + name)) return method;
         }
         return null;
-    }
-
-    private static boolean checkSourceType(MappedFieldDescription fieldDescription, Class sourceType){
-        if(fieldDescription.sourceClasses == null) return true;
-        for(Class c : fieldDescription.sourceClasses) if(sourceType.equals(c)) return true;
-        return false;
-    }
-
-    private static String getFieldNameFromSetter(String methodName){
-        if(methodName.startsWith("set")) methodName = methodName.substring(3);
-        if(methodName.startsWith("is")) methodName = methodName.substring(2);
-
-        if(Character.isLowerCase(methodName.charAt(0)))
-            return methodName;
-        else{
-            char[] chars = methodName.toCharArray();
-            chars[0]+=32;
-            return new String(chars);
-        }
-    }
-
-    private static class MappedFieldDescription {
-        private Class[] sourceClasses;
-        private String sourceFieldName;
-        private String fieldName;
-        private Class filterClass;
-        private Class type;
-        private String setterName;
-
-        private void setConfigs(Class type, String fieldName, MappedConfig config, Mapped mapped){
-            this.type = type;
-            this.setterName = null;
-            this.fieldName = fieldName;
-            this.sourceFieldName = mapped.name().isEmpty() ? fieldName : mapped.name();
-            this.sourceClasses = mapped.targetClass().length == 0 ?
-                    (config == null ?
-                            null :
-                            config.targetClass().length == 0 ?
-                                    null :
-                                    config.targetClass()) :
-                    mapped.targetClass();
-            this.filterClass = void.class.equals(mapped.filter()) ?
-                    (config == null ?
-                            null :
-                            void.class.equals(config.filter()) ?
-                                    null :
-                                    config.filter()) :
-                    mapped.filter();
-        }
     }
 }

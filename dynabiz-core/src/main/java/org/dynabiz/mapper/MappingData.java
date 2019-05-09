@@ -26,16 +26,12 @@ package org.dynabiz.mapper;
 import java.lang.annotation.*;
 
 /**
- * {@code @Mapped} is an annotation for marking fields that need to be mapped.
- *
- * <p>The {@link #name} is optional and represents a new name for a field.
  *
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})
-public @interface Mapped {
-    String name() default "";
+@Target(ElementType.TYPE)
+public @interface MappingData {
     Class[] targetClass() default {};
     Class filter() default void.class;
 }
