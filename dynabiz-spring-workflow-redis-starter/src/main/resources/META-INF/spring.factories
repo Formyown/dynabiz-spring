@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.dynabiz.spring.stepped.storage.RedisAccessTokenStorageConfig
+org.dynabiz.spring.stepped.storage.RedisAccessStorageConfig

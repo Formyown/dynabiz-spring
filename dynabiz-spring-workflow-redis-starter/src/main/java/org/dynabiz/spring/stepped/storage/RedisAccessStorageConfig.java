@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 @Configuration
-public class RedisAccessTokenStorageConfig {
+public class RedisAccessStorageConfig {
 
     @Bean
     @ConditionalOnMissingBean
