@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 @Configuration
-public class RedisAccessStorageConfig {
+public class RedisTaskStorageConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public SteppedTaskStateStorage accessTokenStorage(StringRedisTemplate redisTemplate){
+    public SteppedTaskStateStorage steppedTaskStateStorage(StringRedisTemplate redisTemplate){
         return new SteppedTaskRedisStateStorage(redisTemplate, new ObjectMapper());
     }
 
