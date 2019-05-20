@@ -24,7 +24,7 @@ package test;
 
 import org.dynabiz.mapper.MappingData;
 import org.dynabiz.mapper.MappingField;
-import org.dynabiz.mapper.ObjectMapper;
+import org.dynabiz.mapper.ModelMapper;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -55,7 +55,7 @@ public class MapperTest {
             entities.add(entity);
         }
 
-        List<OrderTransfer> orderTransfers = ObjectMapper.mapFromCollection(OrderTransfer.class, entities, (source, target) -> target.setCanReturns(true));
+        List<OrderTransfer> orderTransfers = ModelMapper.mapFromCollection(OrderTransfer.class, entities, (source, target) -> target.setCanReturns(true));
 
         for (int i = 0; i < 100; i++) {
             OrderEntity entity = entities.get(i);
@@ -65,13 +65,13 @@ public class MapperTest {
             assert transfer.getOrderID() == entity.getOrderID();
             assert transfer.getItems() == entity.getItems();
             assert transfer.getTime().equals(entity.getTime());
-            assert transfer.getTotalDiscount().equals(entity.getTotalDiscount().add(new BigDecimal("10")));
+            assert transfer.getTotalDiscount().equals(entity.getTotalDiscount());
             assert transfer.getTotalPrice().equals(entity.getTotalPrice());
             assert transfer.getPhone().equals(entity.getPhone());
             assert transfer.isCanReturns();
         }
 
-        entities = ObjectMapper.mapFromCollection(OrderEntity.class, orderTransfers);
+        entities = ModelMapper.mapFromCollection(OrderEntity.class, orderTransfers);
         for (int i = 0; i < 100; i++) {
             System.out.println(entities.get(i).toString());
         }
@@ -194,7 +194,7 @@ public class MapperTest {
 
 
         public void setTotalDiscount(BigDecimal totalDiscount) {
-            this.totalDiscount = totalDiscount.add(new BigDecimal("10"));
+            this.totalDiscount = totalDiscount;
         }
 
         public BigDecimal getTotalPrice() {

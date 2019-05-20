@@ -37,5 +37,5 @@ import java.lang.annotation.*;
 public @interface MappingField {
     String name() default "";
     Class[] targetClass() default {};
-    Class filter() default void.class;
+    Class postFilter() default void.class;
 }
