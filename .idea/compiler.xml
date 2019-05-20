@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="dynabiz-core" />
+        <module name="dynabiz-common" />
         <module name="dynabiz-spring-data" />
         <module name="dynabiz-spring-web" />
         <module name="dynabiz-spring-web-redis-starter" />

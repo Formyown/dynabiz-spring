@@ -33,7 +33,7 @@
     </dependencies>
 
     <modules>
-        <module>dynabiz-core</module>
+        <module>dynabiz-common</module>
         <module>dynabiz-std-exceptions</module>
         <module>dynabiz-spring-web</module>
         <module>dynabiz-spring-web-security</module>

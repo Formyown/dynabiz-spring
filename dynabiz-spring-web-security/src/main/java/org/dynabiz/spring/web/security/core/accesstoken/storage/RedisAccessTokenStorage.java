@@ -1,4 +1,4 @@
-package org.dynabiz.spring.web.security;
+package org.dynabiz.spring.web.security.core.accesstoken.storage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,7 @@ public class RedisAccessTokenStorage implements AccessTokenStorage {
     private StringRedisTemplate redisTemplate;
     private ObjectMapper mapper;
 
-    public RedisAccessTokenStorage(final StringRedisTemplate redisTemplate) {
+    public RedisAccessTokenStorage(StringRedisTemplate redisTemplate) {
         Objects.requireNonNull(redisTemplate, "RedisTemplate should not be null");
         this.redisTemplate = redisTemplate;
         this.mapper = new ObjectMapper();
@@ -43,21 +43,19 @@ public class RedisAccessTokenStorage implements AccessTokenStorage {
 
     @Override
     public AccessToken findByAccessTokenValue(final String token) {
-        ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        if(!redisTemplate.hasKey(ACCESS_NS + token)) return null;
-        String json = ops.get(ACCESS_NS + token);
-        try {
-            return mapper.readValue(json, AccessToken.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return findAccessToken(ACCESS_NS, token);
     }
 
     @Override
-    public AccessToken findByRefreshTokenValue(final String token) {
+    public AccessToken findByRefreshTokenValue(String token) {
+        return findAccessToken(REFRESH_NS, token);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private AccessToken findAccessToken(String ns, String token){
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        if(!redisTemplate.hasKey(REFRESH_NS + token)) return null;
-        String json = ops.get(REFRESH_NS + token);
+        if(!redisTemplate.hasKey(ns + token)) return null;
+        String json = ops.get(ns + token);
         try {
             return mapper.readValue(json, AccessToken.class);
         } catch (IOException e) {
@@ -76,12 +74,13 @@ public class RedisAccessTokenStorage implements AccessTokenStorage {
         redisTemplate.delete(REFRESH_NS + token);
     }
 
-    @SuppressWarnings("boxing")
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean existsAccessTokenValue(String token) {
         return redisTemplate.hasKey(ACCESS_NS + token);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean existsRefreshTokenValue(String token) {
         return redisTemplate.hasKey(REFRESH_NS + token);

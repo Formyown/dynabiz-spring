@@ -11,6 +11,12 @@ import org.springframework.context.annotation.Bean;
 public class ServiceContextConfig {
 
     @Bean
+    public ServiceContextHolder serviceContextHolder(ServiceContextSerializer serializer,
+                                                     ServiceContextStorage storage){
+        return new ServiceContextHolder(serializer, storage);
+    }
+
+    @Bean
     @ConditionalOnMissingBean
     public ServiceContextSerializer serviceContextSerializer(){
         ObjectMapper mapper = new ObjectMapper();
@@ -23,9 +29,5 @@ public class ServiceContextConfig {
         return new ServletListenerRegistrationBean<>(new ServiceContextLoaderListener());
     }
 
-    @Bean
-    public ServiceContextHolder serviceContextHolder(ServiceContextSerializer serializer,
-                                                     ServiceContextStorage storage){
-        return new ServiceContextHolder(serializer, storage);
-    }
+
 }
