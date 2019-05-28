@@ -57,7 +57,7 @@ class MapperUtil {
         Field field = null;
         Class curClass = o.getClass();
         do{
-            for(Field f : o.getClass().getDeclaredFields()){
+            for(Field f : curClass.getDeclaredFields()){
                 if(f.getName().equals(name)){
                     field = f;
                     break;
