@@ -5,18 +5,17 @@ import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Parameter;
 import java.util.List;
-import java.util.Map;
 
-public class MapSteppedTaskArgumentResolver extends AbstractSteppedTaskArgumentsResolver {
-    private final Map<String, ?> data;
+public class MultiValueMapSteppedTaskArgumentResolver extends AbstractSteppedTaskArgumentsResolver {
+    private final MultiValueMap<String, ?> data;
 
-    public MapSteppedTaskArgumentResolver(Map<String, ?> data){
+    public MultiValueMapSteppedTaskArgumentResolver(MultiValueMap<String, ?> data){
         this.data = data;
     }
     @Override
     public Object get(String name) {
         if(data.containsKey(name))
-            return data.get(name);
+            return data.get(name).get(0);
         return null;
     }
 
@@ -28,11 +27,10 @@ public class MapSteppedTaskArgumentResolver extends AbstractSteppedTaskArguments
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<T> tClass) {
-        for(Object o : data.values()){
-            if(tClass.isInstance(o)) return (T)o;
+        for(List o : data.values()){
+            if(tClass.isInstance(o.get(0))) return (T)o.get(0);
         }
         return null;
     }
-
 
 }

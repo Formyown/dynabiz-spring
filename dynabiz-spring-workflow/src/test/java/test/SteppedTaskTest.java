@@ -1,7 +1,7 @@
 package test;
 
+import org.dynabiz.workflow.stepped.AbstractSteppedTaskArgumentsResolver;
 import org.dynabiz.workflow.stepped.MapSteppedTaskArgumentResolver;
-import org.dynabiz.workflow.stepped.SteppedTaskArgumentsResolver;
 import org.dynabiz.workflow.stepped.SteppedTaskExecutor;
 import org.dynabiz.workflow.stepped.SteppedTaskResult;
 import org.junit.Assert;
@@ -21,7 +21,7 @@ public class SteppedTaskTest {
         System.out.println("+=========================================================+");
         System.out.println("||                TEST STEPPED TASK BASIC                ||");
         System.out.println("+=========================================================+");
-        SteppedTaskArgumentsResolver resolver = new MapSteppedTaskArgumentResolver(new LinkedMultiValueMap<String, Object>() {
+        AbstractSteppedTaskArgumentsResolver resolver = new MapSteppedTaskArgumentResolver(new LinkedMultiValueMap<String, Object>() {
             {
                 this.add("arg", 5);
             }

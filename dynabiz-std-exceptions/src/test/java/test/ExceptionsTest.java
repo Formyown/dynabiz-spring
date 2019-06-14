@@ -52,6 +52,7 @@ public class ExceptionsTest {
 
         List<BusinessException> bizExceptions = new ArrayList<BusinessException>();
         bizExceptions.addAll(Arrays.asList(FileException.getAllExceptionTypes()));
+        bizExceptions.addAll(Arrays.asList(RepositoryException.getAllExceptionTypes()));
         bizExceptions.addAll(Arrays.asList(FinanceException.getAllExceptionTypes()));
         bizExceptions.addAll(Arrays.asList(LoginException.getAllExceptionTypes()));
         bizExceptions.addAll(Arrays.asList(PermissionException.getAllExceptionTypes()));
