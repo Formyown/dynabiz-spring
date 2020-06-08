@@ -25,9 +25,6 @@ package org.dynabiz.mapper;
 
 
 import org.dynabiz.util.Assert;
-import org.springframework.data.domain.Page;
-
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -53,10 +50,6 @@ public class ModelMapper {
 
     public static <T, ST> List<T> mapFromCollection(Class<T> targetType, Stream<ST> sourcesList, Mapping<ST, T> mapping){
         return sourcesList.map((s)->mapFrom(targetType, s, mapping)).collect(Collectors.toList());
-    }
-
-    public static <T, ST> Page<T> mapFromCollection(Class<T> targetType, Page<ST> sourcesList, Mapping<ST, T> mapping){
-        return sourcesList.map((s)->mapFrom(targetType, s, mapping));
     }
 
     public static <T, ST> T mapFrom(Class<T> targetType, ST sources){
