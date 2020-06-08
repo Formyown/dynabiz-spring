@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.dynabiz.mapper.MapperUtil.*;
 
@@ -47,7 +48,9 @@ public class ModelMapper {
         return sourcesList.stream().map((s)->mapFrom(targetType, s, mapping)).collect(Collectors.toList());
     }
 
-
+    public static <T, ST> List<T> mapFromCollection(Class<T> targetType, Stream<ST> sourcesList, Mapping<ST, T> mapping){
+        return sourcesList.map((s)->mapFrom(targetType, s, mapping)).collect(Collectors.toList());
+    }
 
     public static <T, ST> T mapFrom(Class<T> targetType, ST sources){
         return mapFrom(targetType, sources, null);
