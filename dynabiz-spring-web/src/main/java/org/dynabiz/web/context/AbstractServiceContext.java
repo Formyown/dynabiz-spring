@@ -27,6 +27,7 @@ public abstract class AbstractServiceContext implements Serializable {
      * 判断上下文是否已经被修改
      * @return
      */
+    @JsonIgnore
     public boolean isModified(){
         return hashCode != hashCode();
     }

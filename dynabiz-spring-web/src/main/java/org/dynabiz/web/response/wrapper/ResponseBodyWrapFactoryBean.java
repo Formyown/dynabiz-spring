@@ -26,7 +26,7 @@ public class ResponseBodyWrapFactoryBean implements InitializingBean {
     private void decorateHandlers(List<HandlerMethodReturnValueHandler> handlers) {
         for (HandlerMethodReturnValueHandler handler : handlers) {
             if (handler instanceof RequestResponseBodyMethodProcessor) {
-                //用自己的ResponseBody包装类替换掉框架的，达到返回Result的效果
+
                 ResponseBodyWrapHandler decorator = new ResponseBodyWrapHandler(handler);
                 int index = handlers.indexOf(handler);
                 handlers.set(index, decorator);

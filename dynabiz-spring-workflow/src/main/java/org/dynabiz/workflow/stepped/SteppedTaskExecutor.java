@@ -30,12 +30,12 @@ public class SteppedTaskExecutor {
     }
 
     public static <T extends SteppedTask> SteppedTaskResult next(Class<T> tClass, String token,
-                                                          SteppedTaskArgumentsResolver resolver) throws Exception{
+                                                                 AbstractSteppedTaskArgumentsResolver resolver) throws Exception{
         return next(tClass, token, resolver, null);
     }
 
     public static <T extends SteppedTask> SteppedTaskResult next(Class<T> tClass, String token,
-                                                          SteppedTaskArgumentsResolver resolver,
+                                                                 AbstractSteppedTaskArgumentsResolver resolver,
                                                           String key) throws Exception{
 
         Assert.beTrue(token.length() == TOKEN_LEN * 2, TokenException.BAD_TOKEN);
@@ -96,7 +96,7 @@ public class SteppedTaskExecutor {
     }
 
     public static <T extends SteppedTask> SteppedTaskResult start(Class<T> tClass,
-                                                           SteppedTaskArgumentsResolver resolver) throws Exception{
+                                                                  AbstractSteppedTaskArgumentsResolver resolver) throws Exception{
         return start(tClass, resolver, null);
     }
 
@@ -110,7 +110,7 @@ public class SteppedTaskExecutor {
      * @throws Exception
      */
     public static <T extends SteppedTask> SteppedTaskResult start(Class<T> tClass,
-                                                                  SteppedTaskArgumentsResolver resolver,
+                                                                  AbstractSteppedTaskArgumentsResolver resolver,
                                                                   String key) throws Exception{
 
         //找到找到0号步骤
@@ -181,7 +181,7 @@ public class SteppedTaskExecutor {
     }
 
     private static StepReturnData executeStep(SteppedTask taskClass, Method method,
-                             SteppedTaskArgumentsResolver resolver) throws JsonProcessingException {
+                             AbstractSteppedTaskArgumentsResolver resolver) throws JsonProcessingException {
         Object ret;
         try {
             if(resolver == null){
