@@ -13,7 +13,7 @@ public class AccessTokenBuilder {
 
     private String role;
     private Set<String> permissions;
-    private long uid;
+    private String uid;
     private String appType;
     private String appVer;
     private AccessTokenConfigurationProperties config;
@@ -36,7 +36,7 @@ public class AccessTokenBuilder {
                 appType, appVer, role, permissions, uid);
     }
 
-    public AccessTokenBuilder bindUid(long uid){
+    public AccessTokenBuilder bindUid(String uid){
         this.uid = uid;
         return this;
     }

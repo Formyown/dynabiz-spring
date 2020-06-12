@@ -34,7 +34,7 @@ public class AccessTokenManager {
      * @param permissions
      * @return
      */
-    public AccessToken assign(long uid, String role, Set<String> permissions, String appType, String appVersion){
+    public AccessToken assign(String uid, String role, Set<String> permissions, String appType, String appVersion){
         AccessTokenBuilder builder = new AccessTokenBuilder(properties);
         builder = builder.bindUid(uid).setRole(role).setPermissions(permissions).setAppTypeVersion(appType, appVersion);
         AccessToken accessToken = builder.build();

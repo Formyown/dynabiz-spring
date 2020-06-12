@@ -17,22 +17,22 @@ public class SecurityContext extends AbstractServiceContext {
     public SecurityContext() {
     }
 
-    public SecurityContext(long uid, String role, Set<String> permissions) {
+    public SecurityContext(String uid, String role, Set<String> permissions) {
         this.uid = uid;
         this.role = role;
         this.permissions = permissions;
     }
 
-    private long uid;
+    private String uid;
     private String role;
     private Set<String> permissions;
 
-    public static long getCurrentUser(){
+    public static String getCurrentUser(){
         return Assert.notNull(ServiceContextHolder.get(SecurityContext.class),
                 PermissionException.NO_PERMISSION).getUid();
     }
 
-    public long getUid() {
+    public String getUid() {
         return uid;
     }
 

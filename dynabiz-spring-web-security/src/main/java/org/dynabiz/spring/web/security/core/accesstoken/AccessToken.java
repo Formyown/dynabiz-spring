@@ -21,9 +21,9 @@ public class AccessToken implements Comparable<AccessToken> {
 
     private Set<String> permissions;
 
-    private long uid;
+    private String uid;
 
-    protected AccessToken(String accessToken, String refreshToken, long accessTokenExpireIn, long refreshTokenExpireIn, String appType, String appVersion, String role, Set<String> permissions, long uid) {
+    protected AccessToken(String accessToken, String refreshToken, long accessTokenExpireIn, long refreshTokenExpireIn, String appType, String appVersion, String role, Set<String> permissions, String uid) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.accessTokenExpireIn = accessTokenExpireIn;
@@ -91,7 +91,7 @@ public class AccessToken implements Comparable<AccessToken> {
         return permissions;
     }
 
-    public long getUid() {
+    public String getUid() {
         return uid;
     }
 }
