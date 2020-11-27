@@ -2,6 +2,7 @@ package org.dynabiz.spring.web.security.core.accesstoken.storage;
 
 
 
+import org.dynabiz.spring.web.security.core.accesstoken.AccessTokenManager;
 import org.dynabiz.spring.web.security.core.accesstoken.AccessTokenStorage;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -15,14 +16,14 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 
-@Configuration
+
 @AutoConfigureAfter(RedisAutoConfiguration.class)
-@ConditionalOnBean(StringRedisTemplate.class)
-@ConditionalOnMissingBean(name = "accessTokenManager")
+@ConditionalOnMissingBean(AccessTokenManager.class)
 @ConditionalOnProperty(prefix = "access-token.storage", name = "name", havingValue = "redis", matchIfMissing = true)
 public class AccessTokenStorageConfig {
 
     @Bean
+    @ConditionalOnBean(StringRedisTemplate.class)
     public AccessTokenStorage accessTokenStorage(StringRedisTemplate stringRedisTemplate){
         return new RedisAccessTokenStorage(stringRedisTemplate);
     }
