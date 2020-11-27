@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties(AccessTokenConfigurationProperties.class)
 public class AccessTokenConfig {
 
-
     @Bean
     public AccessTokenManager accessTokenManager(AccessTokenStorage storage,
                                                  AccessTokenConfigurationProperties properties){

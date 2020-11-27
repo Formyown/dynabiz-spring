@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @ConditionalOnBean(StringRedisTemplate.class)
-@ConditionalOnMissingBean(AccessTokenStorage.class)
+@ConditionalOnMissingBean(name = "accessTokenManager")
 @ConditionalOnProperty(prefix = "access-token.storage", name = "name", havingValue = "redis", matchIfMissing = true)
 public class AccessTokenStorageConfig {
 
