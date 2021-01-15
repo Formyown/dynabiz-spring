@@ -1,15 +1,14 @@
 package test;
 
-import org.dynabiz.workflow.stepped.AbstractSteppedTaskArgumentsResolver;
-import org.dynabiz.workflow.stepped.MapSteppedTaskArgumentResolver;
-import org.dynabiz.workflow.stepped.SteppedTaskExecutor;
-import org.dynabiz.workflow.stepped.SteppedTaskResult;
+import org.dynabiz.workflow.stepped.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
+
+import java.util.HashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,13 +20,14 @@ public class SteppedTaskTest {
         System.out.println("+=========================================================+");
         System.out.println("||                TEST STEPPED TASK BASIC                ||");
         System.out.println("+=========================================================+");
-        AbstractSteppedTaskArgumentsResolver resolver = new MapSteppedTaskArgumentResolver(new LinkedMultiValueMap<String, Object>() {
+        AbstractSteppedTaskArgumentsResolver resolver = new MapSteppedTaskArgumentResolver(new HashMap<String, Object>() {
             {
-                this.add("arg", 5);
+                this.put("arg", 5);
             }
         });
         SteppedTaskResult steppedTaskResult = SteppedTaskExecutor.start(SimpleSteppedTask.class, resolver);
-        resolver = new MapSteppedTaskArgumentResolver(new LinkedMultiValueMap<String, Object>() {
+
+        resolver = new MultiValueMapSteppedTaskArgumentResolver(new LinkedMultiValueMap<String, Object>() {
             {
                 this.add("arg0", 10);
                 this.add("arg1", 100);

@@ -66,6 +66,11 @@
             <version>2.9.10.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.dynabiz</groupId>
+            <artifactId>demitasse-db</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- dependencies for testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -75,4 +80,10 @@
         </dependency>
 
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jetsky</id>
+            <url>http://maven.jetskytec.com/nexus/repository/dynabiz/</url>
+        </repository>
+    </repositories>
 </project>

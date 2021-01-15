@@ -193,7 +193,7 @@ public class SteppedTaskExecutor {
 
 
         } catch (Exception e){
-            return new StepReturnData(e.getCause(),null);
+            return new StepReturnData(e,null);
         }
         return new StepReturnData(ret,  mapper.writeValueAsString(taskClass));
     }
