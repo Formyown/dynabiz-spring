@@ -45,4 +45,18 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <layout>default</layout>
+            <name>Releases</name>
+            <url>http://maven.jetskytec.com/nexus/repository/dynabiz/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <layout>default</layout>
+            <name>Snapshot</name>
+            <url>http://maven.jetskytec.com/nexus/repository/dynabiz/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
