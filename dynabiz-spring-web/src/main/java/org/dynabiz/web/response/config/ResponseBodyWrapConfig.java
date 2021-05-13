@@ -13,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Configuration
 public class ResponseBodyWrapConfig implements ResponseBodyAdvice {
@@ -21,7 +24,20 @@ public class ResponseBodyWrapConfig implements ResponseBodyAdvice {
         return true;
     }
 
+    /**
+     * 需要忽略的地址
+     */
+    private Set<String> ignores = new HashSet<String>(){
+        {
+            add( "/swagger-resources");
+            add("/v2/api-docs");
+        }
+    };
+
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        if (this.ignores.contains(serverHttpRequest.getURI().toString())) {
+            return o;
+        }
         if(o instanceof ResponseEntity){
             return o;
         }
