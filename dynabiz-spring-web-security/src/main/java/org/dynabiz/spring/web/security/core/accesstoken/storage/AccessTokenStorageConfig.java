@@ -14,7 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 public class AccessTokenStorageConfig {
 
     @Bean
-    @ConditionalOnBean(StringRedisTemplate.class)
+    @ConditionalOnBean(name = "stringRedisTemplate")
     public AccessTokenStorage accessTokenStorage(StringRedisTemplate stringRedisTemplate){
         return new RedisAccessTokenStorage(stringRedisTemplate);
     }

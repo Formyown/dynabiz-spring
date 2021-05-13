@@ -30,7 +30,7 @@
     <parent>
         <groupId>org.dynabiz</groupId>
         <artifactId>dynabiz-spring</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <distributionManagement>
@@ -66,13 +66,13 @@
         <dependency>
             <groupId>org.dynabiz</groupId>
             <artifactId>dynabiz-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.dynabiz</groupId>
             <artifactId>dynabiz-spring-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1-SNAPSHOT</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>org.dynabiz</groupId>
             <artifactId>demitasse-db</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
         <!-- dependencies for testing -->
         <dependency>
@@ -93,12 +93,12 @@
             <version>2.0.2.RELEASE</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
     <repositories>
         <repository>
-            <id>jetsky</id>
-            <url>http://maven.jetskytec.com/nexus/repository/dynabiz/</url>
+            <id>github-package</id>
+            <name>Github package Maven</name>
+            <url>https://maven.pkg.github.com/formyown/demitasse-db</url>
         </repository>
     </repositories>
 </project>
