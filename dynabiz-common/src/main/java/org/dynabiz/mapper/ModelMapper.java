@@ -89,7 +89,7 @@ public class ModelMapper {
         // eg. dto to entity
         if(targetFields.size() == 0 && sourceFields.size() > 0){
             for (FieldDescription field: sourceFields) {
-                if(MapperUtil.checkSourceType(field, source.getClass())) {
+                if(MapperUtil.checkSourceType(field, target.getClass())) {
                     applyValue(target, source, field.mappingName, field.realName);
                 }
 
